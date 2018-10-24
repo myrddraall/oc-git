@@ -76,7 +76,6 @@ function GitRepo:__init (repo, credentials)
     self.url = repo;
     self.userName = parts[1];
     self.repo = parts[2];
-    credentials = credentials or data.encode64('myrddraall:c049072639d692db0890b3c2e46a38e3490fdccf');
     if credentials then
         self.headers =  {
             Authorization = 'Basic ' .. credentials;
