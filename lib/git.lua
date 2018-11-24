@@ -86,11 +86,11 @@ local API_LIST_REFS = "/git/refs";
 local API_LIST_TAGS = "/tags";
 local API_COMMITS = "/git/commits/";
 
-function GitRepo:getRefs()
+function GithubRepo:getRefs()
     return getHttpJson(getGitApiUrl(self.url, API_LIST_REFS), self.headers);
 end
 
-function GitRepo:printRefs(returnString)
+function GithubRepo:printRefs(returnString)
     local success, result = self:getRefs();
     if success then
         local str = json.encode(result, {indent = 2});
@@ -103,7 +103,7 @@ function GitRepo:printRefs(returnString)
 end
 
 
-function GitRepo:listTags()
+function GithubRepo:listTags()
     local success, result = getHttpJson(getGitApiUrl(self.url, API_LIST_TAGS), self.headers);
     if not success then
         error(result);
@@ -118,7 +118,7 @@ function GitRepo:listTags()
     return list;
 end
 
-function GitRepo:getTags()
+function GithubRepo:getTags()
     local success, result = getHttpJson(getGitApiUrl(self.url, API_LIST_TAGS), self.headers);
     if not success then
         error(result);
@@ -126,7 +126,7 @@ function GitRepo:getTags()
     return result;
 end
 
-function GitRepo:findTag(tag)
+function GithubRepo:findTag(tag)
     local tags = self:getTags();
     for i, v in ipairs(tags) do
         if v.name == tag then
@@ -135,7 +135,7 @@ function GitRepo:findTag(tag)
     end
 end
 
-function GitRepo:printTags(full, returnString)
+function GithubRepo:printTags(full, returnString)
     local str = "";
     if not full then
         for i, v in ipairs(self:listTags()) do
@@ -151,13 +151,13 @@ function GitRepo:printTags(full, returnString)
 end
 
 
-function GitRepo:checkoutTag(tag, dest)
+function GithubRepo:checkoutTag(tag, dest)
     local tag = self:findTag(tag);
     print(json.encode(tag, {indent=2}))
     self:_checkout(tag.commit.sha, dest);
 end
 
-function GitRepo:_checkout (sha, dest)
+function GithubRepo:_checkout (sha, dest)
     dest = dest or './' .. self.repo;
     local url = getGitApiUrl(self.url, API_COMMITS, sha);
     local success, result = getHttpJson(url, self.headers);
@@ -170,7 +170,7 @@ function GitRepo:_checkout (sha, dest)
     self:_downloadTree(dest, sha, filetree.url);
 end
 
-function GitRepo:_downloadTree(dest, sha, fileUrl, parentDir)
+function GithubRepo:_downloadTree(dest, sha, fileUrl, parentDir)
     parentDir = parentDir or "";
     local success, fileData = getHttpJson(fileUrl, self.headers);
 
@@ -189,14 +189,14 @@ function GitRepo:_downloadTree(dest, sha, fileUrl, parentDir)
     end 
 end
 
-function GitRepo:_makeDir(dest, dir)
+function GithubRepo:_makeDir(dest, dir)
     dest = dest or './' .. self.repo;
     local path = shell.resolve(fs.concat(dest, dir));
     print("Creating directory: " .. dir);
     fs.makeDirectory(path);
 end
 
-function GitRepo:_downloadFile(dest, sha, filename)
+function GithubRepo:_downloadFile(dest, sha, filename)
     dest = dest or './' .. self.repo;
     local path = shell.resolve(fs.concat(dest, filename));
     print("Downloading: " .. filename);
@@ -211,7 +211,7 @@ function GitRepo:_downloadFile(dest, sha, filename)
     file:close();
 end
 
-function GitRepo:checkout (dest, sha)
+function GithubRepo:checkout (dest, sha)
     if sha then
         self:_checkout(sha, dest);
     else
@@ -227,4 +227,4 @@ function GitRepo:checkout (dest, sha)
     end
 end
 
-return GitRepo;
+return GithubRepo;
