@@ -22,7 +22,7 @@ package.loaded["git"] = nil;
 local GithubRepo = require("git");
 local oopGit = GithubRepo:new("myrddraall/oc-oop");
 oopGit:checkout("/home/github/repos/oc-oop");
-shell.execute('/home/github/repos/oc-oop/install.lua');
+shell.execute('cd /home/github/repos/oc-oop/ && /home/github/repos/oc-oop/install.lua');
 
 --[[
 
