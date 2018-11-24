@@ -5,6 +5,8 @@ local os = require("os");
 shell.execute('wget -f "https://raw.githubusercontent.com/myrddraall/oc-lib/master/lib/json.lua" "/usr/lib/json.lua"');
 shell.execute('wget -f "https://raw.githubusercontent.com/myrddraall/oc-import/master/lib/import.lua" "/lib/import.lua"');
 shell.execute('wget -f "https://raw.githubusercontent.com/myrddraall/oc-import/master/boot/04_import.lua" "/boot/04_import.lua"');
+require("import");
+
 
 fs.makeDirectory('/usr/lib/oop');
 shell.execute('wget -f "https://raw.githubusercontent.com/myrddraall/oc-oop/master/lib/middleclass.lua" "/usr/lib/oop/middleclass.lua"');
