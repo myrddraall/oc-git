@@ -21,7 +21,9 @@ shell.execute('wget -f "https://raw.githubusercontent.com/myrddraall/oc-git/mast
 package.loaded["git"] = nil;
 local GithubRepo = require("git");
 local oopGit = GithubRepo:new("myrddraall/oc-oop");
-oopGit:checkout("/usr/lib/oop");
+oopGit:checkout("/home/github/repos/oc-oop");
+shell.execute('/home/github/repos/oc-oop/install.lua');
+
 --[[
 
     local GitRepo = require("git");
