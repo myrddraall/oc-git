@@ -43,7 +43,7 @@ shell.execute('cd /tmp/github/repos/oc-git/ && /tmp/github/repos/oc-git/install.
 
 print("Rebooting...")
 os.sleep(2);
-    --shell.execute('reboot');
+shell.execute('reboot');
 
 --[[
 
