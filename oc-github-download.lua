@@ -42,7 +42,7 @@ githubGit:checkout("/tmp/github/repos/oc-git");
 shell.execute('cd /tmp/github/repos/oc-git/ && /tmp/github/repos/oc-git/install.lua');
 
 print("Rebooting...")
-os.sleep(2);
+os.sleep(4);
 shell.execute('reboot');
 
 --[[
