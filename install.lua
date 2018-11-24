@@ -1,7 +1,7 @@
 local shell = require("shell");
 local fs = require("filesystem");
 local os = require("os");
-print("Downloading...")
+
 shell.execute('wget -f "https://raw.githubusercontent.com/myrddraall/oc-lib/master/lib/json.lua" "/usr/lib/json.lua"');
 
 fs.makeDirectory('/usr/lib/oop');
@@ -10,6 +10,8 @@ shell.execute('wget -f "https://raw.githubusercontent.com/myrddraall/oc-oop/mast
 shell.execute('wget -f "https://raw.githubusercontent.com/mpeterv/argparse/0.6.0/src/argparse.lua" "/usr/lib/argparse.lua"');
 shell.execute('wget -f "https://raw.githubusercontent.com/myrddraall/oc-git/master/lib/git.lua" "/usr/lib/git.lua"');
 
+local GithubRepo = require("git");
+local oopGit = GithubRepo:new("myrddraall/oc-oop");
 
 --[[
 
