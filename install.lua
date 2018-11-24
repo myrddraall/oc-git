@@ -18,9 +18,10 @@ shell.execute('wget -f "https://raw.githubusercontent.com/mpeterv/argparse/0.6.0
 shell.execute('wget -f "https://raw.githubusercontent.com/myrddraall/oc-git/master/lib/git.lua" "/usr/lib/git.lua"');
 
 
+package.loaded["git"] = nil;
 local GithubRepo = require("git");
 local oopGit = GithubRepo:new("myrddraall/oc-oop");
-
+oopGit:checkout("/usr/lib/oop");
 --[[
 
     local GitRepo = require("git");
