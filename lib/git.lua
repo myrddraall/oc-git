@@ -3,7 +3,7 @@ local internet = require("internet");
 local data = require("component").data;
 local fs = require("filesystem");
 local json = require("json");
-local Class = require("soul/Class");
+local Class = require("oop/Class");
 local os = require("os");
 
 local function readHttpResponse(response)
@@ -67,11 +67,10 @@ local function getGitContentUrl(repo, sha, path)
 end
 
 
-local GitRepo = Class:extend();
+local GithubRepo = Class("GithubRepo");
 
 
-function GitRepo:__init (repo, credentials)
-    Class.__init(self);
+function GithubRepo:initialize (repo, credentials)
     local parts = split(repo, "/");
     self.url = repo;
     self.userName = parts[1];
