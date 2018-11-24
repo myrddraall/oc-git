@@ -21,13 +21,29 @@ shell.execute('wget -f "https://raw.githubusercontent.com/myrddraall/oc-git/mast
 package.loaded["git"] = nil;
 local GithubRepo = require("git");
 
-local oopGit = GithubRepo:new("myrddraall/oc-oop");
-oopGit:checkout("/home/github/repos/oc-oop");
-shell.execute('cd /home/github/repos/oc-oop/ && /home/github/repos/oc-oop/install.lua');
+print("Installing OC-IMPORT...");
+local importGit = GithubRepo:new("myrddraall/oc-import");
+importGit:checkout("/tmp/github/repos/oc-import");
+shell.execute('cd /tmp/github/repos/oc-import/ && /tmp/github/repos/oc-import/install.lua');
 
+print("Installing OC-OOP...");
+local oopGit = GithubRepo:new("myrddraall/oc-oop");
+oopGit:checkout("/tmp/github/repos/oc-oop");
+shell.execute('cd /tmp/github/repos/oc-oop/ && /tmp/github/repos/oc-oop/install.lua');
+
+print("Installing OC-LIB...");
+local libGit = GithubRepo:new("myrddraall/oc-lib");
+libGit:checkout("/tmp/github/repos/oc-lib");
+shell.execute('cd /tmp/github/repos/oc-lib/ && /tmp/github/repos/oc-lib/install.lua');
+
+print("Installing OC-GIT...");
 local githubGit = GithubRepo:new("myrddraall/oc-git");
-githubGit:checkout("/home/github/repos/oc-git");
-shell.execute('cd /home/github/repos/oc-git/ && /home/github/repos/oc-git/install.lua');
+githubGit:checkout("/tmp/github/repos/oc-git");
+shell.execute('cd /tmp/github/repos/oc-git/ && /tmp/github/repos/oc-git/install.lua');
+
+print("Rebooting...")
+os.sleep(2);
+    --shell.execute('reboot');
 
 --[[
 
