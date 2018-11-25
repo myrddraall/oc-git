@@ -7,6 +7,11 @@ local Class = require("oop/Class");
 local os = require("os");
 local term = require("term");
 
+local match = string.match;
+local trim = function (str)
+    return match(str,'^()%s*$') and '' or match(str,'^%s*(.*%S)');
+end
+
 local function readHttpResponse(response)
     local result = "";
     local success, chunk = pcall(response);
@@ -92,17 +97,15 @@ function GithubRepo:initialize (repo, credentials)
             fh:close();
         else
             term.write("github username (blank for none): ");
-            local user = term.read();
+            local user = trim(term.read());
             
             local token;
             if user ~= nil and user ~= "" then
-                user = user:trim();
+               
                 term.write("github token: ");
-                token = term.read();
-                token = token:trim();
+                token = trim(term.read());
                 term.write("Store key perminatly[y/N]: ");
-                local perm = term.read();
-                perm = perm:trim();
+                local perm = trim(term.read());
                 key = data.encode64(user  .. ":" .. token);
 
                 local storePath = "/tmp/githubtoken";
