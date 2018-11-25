@@ -51,7 +51,7 @@ local githubGit = GithubRepo:new("myrddraall/oc-git");
 githubGit:checkout("/tmp/github/repos/oc-git");
 shell.execute('cd /tmp/github/repos/oc-git/ && /tmp/github/repos/oc-git/install.lua' .. installDir);
 
-if  installDir ~= nil and installDir ~= '' then
+if  installDir == nil or installDir == '' then
     print("Rebooting...")
     os.sleep(4);
     shell.execute('reboot');
