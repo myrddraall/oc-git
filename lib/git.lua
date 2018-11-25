@@ -93,14 +93,16 @@ function GithubRepo:initialize (repo, credentials)
         else
             term.write("github username (blank for none): ");
             local user = term.read();
+            
             local token;
             if user ~= nil and user ~= "" then
+                user = user:trim();
                 term.write("github token: ");
                 token = term.read();
-           
+                token = token:trim();
                 term.write("Store key perminatly[y/N]: ");
                 local perm = term.read();
-
+                perm = perm:trim();
                 key = data.encode64(user  .. ":" .. token);
 
                 local storePath = "/tmp/githubtoken";
