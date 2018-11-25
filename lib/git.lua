@@ -84,11 +84,11 @@ function GithubRepo:initialize (repo, credentials)
         local key = "";
         if fs.exists("/usr/githubtoken") then
             local fh = fs.open("/usr/githubtoken", "r");
-            local key = fh.read(fs.size("/usr/githubtoken"));
+            local key = fh:read(fs.size("/usr/githubtoken"));
             fh.close();
         elseif fs.exists("/tmp/githubtoken") then
             local fh = fs.open("/tmp/githubtoken", "r");
-            key = fh.read(fs.size("/tmp/githubtoken"));
+            key = fh:read(fs.size("/tmp/githubtoken"));
             fh.close();
         else
             term.write("github username (blank for none): ");
@@ -108,7 +108,7 @@ function GithubRepo:initialize (repo, credentials)
                     storePath = "/usr/githubtoken";
                 end
                 local fh = fs.open(storePath, "w");
-                fh.write(key)
+                fh:write(key)
                 fh.close();
             end
         end
