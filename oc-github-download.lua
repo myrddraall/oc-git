@@ -3,6 +3,7 @@ local fs = require("filesystem");
 local os = require("os");
 
 -- wget -f "https://raw.githubusercontent.com/myrddraall/oc-git/master/oc-github-download.lua" "./oc-github-download.lua"
+fs.makeDirectory('/usr/lib');
 
 shell.execute('wget -f "https://raw.githubusercontent.com/myrddraall/oc-lib/master/lib/json.lua" "/usr/lib/json.lua"');
 shell.execute('wget -f "https://raw.githubusercontent.com/myrddraall/oc-import/master/lib/import.lua" "/usr/lib/import.lua"');
