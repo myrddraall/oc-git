@@ -89,7 +89,7 @@ function GithubRepo:initialize (repo, credentials)
         local key = "";
         if fs.exists("/usr/githubtoken") then
             local fh = fs.open("/usr/githubtoken", "r");
-            local key = fh:read(fs.size("/usr/githubtoken"));
+            key = fh:read(fs.size("/usr/githubtoken"));
             fh:close();
         elseif fs.exists("/tmp/githubtoken") then
             local fh = fs.open("/tmp/githubtoken", "r");

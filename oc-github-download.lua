@@ -10,8 +10,8 @@ if args[1] then
     installDir = ' ' .. args[1];
 end
 
-
 -- wget -f "https://raw.githubusercontent.com/myrddraall/oc-git/master/oc-github-download.lua" "./oc-github-download.lua"
+
 fs.makeDirectory('/usr/lib');
 
 shell.execute('wget -f "https://raw.githubusercontent.com/myrddraall/oc-lib/master/lib/json.lua" "/usr/lib/json.lua"');
@@ -56,20 +56,3 @@ if  installDir == nil or installDir == '' then
     os.sleep(4);
     shell.execute('reboot');
 end
---[[
-
-    local GitRepo = require("git");
-    local oopGit = GitRepo:new("majesty2450/OpenComputers-SOUL");
-    oopGit:checkout("/lib/soul");
-    
-    local gitGit = GitRepo:new("myrddraall/oc-git");
-    gitGit:checkoutTag("stable", "/tmp/git-install/git");
-    
-    print("Installing...");
-    
-    shell.execute("cp /tmp/git-install/git/cli/git.lua /bin/");
-    
-    print("Rebooting...")
-    os.sleep(2);
-    shell.execute('reboot');
-    ]]
