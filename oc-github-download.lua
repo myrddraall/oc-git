@@ -2,6 +2,15 @@ local shell = require("shell");
 local fs = require("filesystem");
 local os = require("os");
 
+local args = {...};
+
+local installDir = '';
+
+if args[1] then
+    installDir = ' ' .. args[1];
+end
+
+
 -- wget -f "https://raw.githubusercontent.com/myrddraall/oc-git/master/oc-github-download.lua" "./oc-github-download.lua"
 fs.makeDirectory('/usr/lib');
 
@@ -25,27 +34,28 @@ local GithubRepo = require("git");
 print("Installing OC-IMPORT...");
 local importGit = GithubRepo:new("myrddraall/oc-import");
 importGit:checkout("/tmp/github/repos/oc-import");
-shell.execute('cd /tmp/github/repos/oc-import/ && /tmp/github/repos/oc-import/install.lua');
+shell.execute('cd /tmp/github/repos/oc-import/ && /tmp/github/repos/oc-import/install.lua' .. installDir);
 
 print("Installing OC-OOP...");
 local oopGit = GithubRepo:new("myrddraall/oc-oop");
 oopGit:checkout("/tmp/github/repos/oc-oop");
-shell.execute('cd /tmp/github/repos/oc-oop/ && /tmp/github/repos/oc-oop/install.lua');
+shell.execute('cd /tmp/github/repos/oc-oop/ && /tmp/github/repos/oc-oop/install.lua' .. installDir);
 
 print("Installing OC-LIB...");
 local libGit = GithubRepo:new("myrddraall/oc-lib");
 libGit:checkout("/tmp/github/repos/oc-lib");
-shell.execute('cd /tmp/github/repos/oc-lib/ && /tmp/github/repos/oc-lib/install.lua');
+shell.execute('cd /tmp/github/repos/oc-lib/ && /tmp/github/repos/oc-lib/install.lua' .. installDir);
 
 print("Installing OC-GIT...");
 local githubGit = GithubRepo:new("myrddraall/oc-git");
 githubGit:checkout("/tmp/github/repos/oc-git");
-shell.execute('cd /tmp/github/repos/oc-git/ && /tmp/github/repos/oc-git/install.lua');
+shell.execute('cd /tmp/github/repos/oc-git/ && /tmp/github/repos/oc-git/install.lua' .. installDir);
 
-print("Rebooting...")
-os.sleep(4);
-shell.execute('reboot');
-
+if  installDir ~= nil and installDir ~= '' then
+    print("Rebooting...")
+    os.sleep(4);
+    shell.execute('reboot');
+end
 --[[
 
     local GitRepo = require("git");
