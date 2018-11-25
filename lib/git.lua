@@ -101,7 +101,7 @@ function GithubRepo:initialize (repo, credentials)
                 term.write("Store key perminatly[y/N]: ");
                 local perm = term.read();
 
-                key = data.encode64(user  .. ":" + token);
+                key = data.encode64(user  .. ":" .. token);
 
                 local storePath = "/tmp/githubtoken";
                 if perm == "y" or perm == "Y" then
