@@ -81,7 +81,7 @@ function GithubRepo:initialize (repo, credentials)
             Authorization = 'Basic ' .. credentials;
         };
     else 
-        local key = nil;
+        local key = "";
         if fs.exists("/usr/githubtoken") then
             local fh = fs.open("/usr/githubtoken", "r");
             local key = fh.read(fs.size("/usr/githubtoken"));
@@ -91,22 +91,32 @@ function GithubRepo:initialize (repo, credentials)
             key = fh.read(fs.size("/tmp/githubtoken"));
             fh.close();
         else
-            term.write("github login token (blank for none): ");
-            key = term.read();
-            term.write("Store key perminatly[y/N]: ");
-            local perm = term.read();
-            local storePath = "/tmp/githubtoken";
-            if perm == "y" or perm == "Y" then
-                storePath = "/usr/githubtoken";
+            term.write("github username (blank for none): ");
+            local user = term.read();
+            local token;
+            if user ~= nil and user ~= "" then
+                term.write("github token: ");
+                token = term.read();
+           
+                term.write("Store key perminatly[y/N]: ");
+                local perm = term.read();
+
+                key = data.encode64(user  .. ":" + token);
+
+                local storePath = "/tmp/githubtoken";
+                if perm == "y" or perm == "Y" then
+                    storePath = "/usr/githubtoken";
+                end
+                local fh = fs.open(storePath, "w");
+                fh.write(key)
+                fh.close();
             end
-            local fh = fs.open(storePath, "w");
-            fh.write(key)
-            fh.close();
         end
-       
-        self.headers =  {
-            Authorization = 'Basic ' .. key;
-        };
+        if key ~= nil and key ~= '' then
+            self.headers =  {
+                Authorization = 'Basic ' .. key;
+            };
+        end
     end
 end
 
