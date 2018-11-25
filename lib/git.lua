@@ -5,6 +5,7 @@ local fs = require("filesystem");
 local json = require("json");
 local Class = require("oop/Class");
 local os = require("os");
+local term = require("term");
 
 local function readHttpResponse(response)
     local result = "";
@@ -78,6 +79,33 @@ function GithubRepo:initialize (repo, credentials)
     if credentials then
         self.headers =  {
             Authorization = 'Basic ' .. credentials;
+        };
+    else 
+        local key = nil;
+        if fs.exists("/usr/githubtoken") then
+            local fh = fs.open("/usr/githubtoken", "r");
+            local key = fh.read(fs.size("/usr/githubtoken"));
+            fh.close();
+        elseif fs.exists("/tmp/githubtoken") then
+            local fh = fs.open("/tmp/githubtoken", "r");
+            key = fh.read(fs.size("/tmp/githubtoken"));
+            fh.close();
+        else
+            term.write("github login token (blank for none): ");
+            key = term.read();
+            term.write("Store key perminatly[y/N]: ");
+            local perm = term.read();
+            local storePath = "/tmp/githubtoken";
+            if perm == "y" or perm == "Y" then
+                storePath = "/usr/githubtoken";
+            end
+            local fh = fs.open(storePath, "w");
+            fh.write(key)
+            fh.close();
+        end
+       
+        self.headers =  {
+            Authorization = 'Basic ' .. key;
         };
     end
 end
