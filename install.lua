@@ -6,7 +6,7 @@ if args[1] then
 end
 if installDir ~= "" then
     local fs = require("filesystem");
-    fs.makeDirectory(installDir);
+    fs.makeDirectory(installDir .. '/usr/lib');
 end
 shell.execute('rm ' .. installDir .. '/usr/lib/git.lua');
 shell.execute('cp -r ./lib/* ' .. installDir .. '/usr/lib/');
