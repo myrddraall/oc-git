@@ -213,7 +213,6 @@ function GithubRepo:findVersion(version)
           end
     else
         -- version tag
-        print('VERSION!!!!', version)
         local targetVer;
         if first ~= '^' then
             targetVer = semver(version);

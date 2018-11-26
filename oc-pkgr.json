@@ -1,6 +1,6 @@
 {
     "name": "oc-git",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "githubrepo": "myrddraall/oc-git",
     "description": "",
     "packageDependancies":{
@@ -10,5 +10,8 @@
     },
     "fileDependancies":{
         "/usr/lib/semver.lua": "https://raw.githubusercontent.com/kikito/semver.lua/master/semver.lua"
+    },
+    "install": {
+        "lib/": "lib/*"
     }
 }
