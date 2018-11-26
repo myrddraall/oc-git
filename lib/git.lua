@@ -181,22 +181,12 @@ end
 
 function GithubRepo:findVersion(version)
     if version == nil or version == '' then
-        version = '!';
+        version = '@latest';
     end
    
     local first = version:sub(1,1);
     local value = version:sub(2);
-    if first == '#' then
-        -- tag;
-        local tag = self:findTag(value);
-        if tag then
-            print("found tag", tag.name);
-        else
-            print("Could not find tag", value);
-        end
-    elseif first == '@' then
-        -- version tag
-    else
+    if version == '@latest' then
         -- latest
         local success, repoData = self:getRefs();
         if not success then
@@ -205,7 +195,66 @@ function GithubRepo:findVersion(version)
         else
             local lastest = repoData[1].object;
             local newestSha = lastest.sha;
-            return lastest;
+            return {
+                version = '@latest',
+                sha = newestSha,
+            };
+        end
+    elseif first == '#' then
+          -- tag;
+          local tag = self:findTag(value);
+          if tag then
+            return {
+                version = value,
+                sha = tag.commit.sha,
+            };
+          else
+              print("Could not find tag", value);
+          end
+    else
+        -- version tag
+        print('VERSION!!!!', version)
+        local targetVer;
+        if first ~= '^' then
+            targetVer = semver(version);
+        else
+            targetVer = semver(value);
+        end
+        
+        
+        local tags = self:getTags();
+        local highestVer = nil;
+        local highestFound = nil;
+        for i, tag in ipairs(tags) do
+            local s, ver = pcall(semver, tag.name);
+            if s then
+                if first ~= '^' then
+                    if targetVer == ver then
+                        highestFound = tag.commit;
+                        highestVer = ver;
+                        break;
+                    end
+                end
+                local isUpable = targetVer ^ ver;
+                if isUpable then
+                    if not highestFound then
+                        highestVer = ver;
+                        highestFound = tag.commit;
+                    else
+                        if ver > highestVer then
+                            highestVer = ver;
+                            highestFound = tag.commit;
+                        end
+                    end
+                end
+            end
+        end
+
+        if highestFound then
+            return {
+                version = highestVer,
+                sha = highestFound.sha,
+            };
         end
     end
 end
@@ -284,6 +333,18 @@ function GithubRepo:_downloadFile(dest, sha, filename)
     local file = fs.open(path, "w");
     file:write(data);
     file:close();
+end
+
+function GithubRepo:getFile(sha, filename)
+    
+    print("Downloading: " .. filename);
+    local fileUrl = getGitContentUrl(self.url, sha, filename);
+    local success, data = getHttpData(fileUrl, self.headers);
+    if not success then
+        error("Error downloading " .. filename);
+    end
+
+   return data;
 end
 
 function GithubRepo:checkout (dest, sha)
