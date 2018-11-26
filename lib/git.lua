@@ -6,6 +6,7 @@ local json = require("json");
 local Class = require("oop/Class");
 local os = require("os");
 local term = require("term");
+local semver = import("semver");
 
 local match = string.match;
 local trim = function (str)
@@ -176,6 +177,11 @@ function GithubRepo:findTag(tag)
             return v;
         end
     end
+end
+
+function GithubRepo:findVersion(version)
+    local first = version:sub(1,1);
+    print(first)
 end
 
 function GithubRepo:printTags(full, returnString)
