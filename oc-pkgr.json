@@ -1,10 +1,10 @@
 {
     "name": "oc-git",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "githubrepo": "myrddraall/oc-git",
     "description": "",
     "packageDependancies":{
-        "myrddraall/oc-lib": "^0.0.4",
+        "myrddraall/oc-lib": "^1.0.0",
         "myrddraall/oc-oop": "^1.0.4"
     },
     "fileDependancies":{
