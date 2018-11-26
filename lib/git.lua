@@ -180,8 +180,34 @@ function GithubRepo:findTag(tag)
 end
 
 function GithubRepo:findVersion(version)
+    if version == nil or version == '' then
+        version = '!';
+    end
+   
     local first = version:sub(1,1);
-    print(first)
+    local value = version:sub(2);
+    if first == '#' then
+        -- tag;
+        local tag = self:findTag(value);
+        if tag then
+            print("found tag", tag.name);
+        else
+            print("Could not find tag", value);
+        end
+    elseif first == '@' then
+        -- version tag
+    else
+        -- latest
+        local success, repoData = self:getRefs();
+        if not success then
+            print("Error: Could not get refs '" .. self.repo .. "''");
+            print(repoData);
+        else
+            local lastest = repoData[1].object;
+            local newestSha = lastest.sha;
+            return lastest;
+        end
+    end
 end
 
 function GithubRepo:printTags(full, returnString)
