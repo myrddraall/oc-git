@@ -4,7 +4,7 @@
     "githubrepo": "myrddraall/oc-git",
     "description": "",
     "packageDependancies":{
-        "myrddraall/oc-lib": "^1.0.0",
+        "myrddraall/oc-lib": "^0.0.1",
         "myrddraall/oc-import": "^1.0.0",
         "myrddraall/oc-oop": "^1.0.0"
     },
