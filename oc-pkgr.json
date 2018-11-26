@@ -1,6 +1,6 @@
 {
     "name": "oc-git",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "githubrepo": "myrddraall/oc-git",
     "description": "",
     "packageDependancies":{
